@@ -17,7 +17,7 @@ namespace esphome
       void set_tds_sensor(sensor::Sensor *value) { tds_sensor_ = value; }
       void set_temperature_sensor(sensor::Sensor *value) { internal_temperature_ = value; }
       //void set_my_pin(GPIOPin *pin) { pin_ = pin; }
-
+      void set_pin(GPIOPin *pin);
       void setup() override;
       void update() override;
       void loop() override;
@@ -25,7 +25,7 @@ namespace esphome
 
     protected:
       bool update_{true};
-      //GPIOPin *pin_{nullptr};
+      GPIOPin *pin_{nullptr};
       sensor::Sensor *tds_sensor_{nullptr};
       sensor::Sensor *internal_temperature_{nullptr};
     };

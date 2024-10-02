@@ -70,5 +70,11 @@ namespace esphome
             LOG_UPDATE_INTERVAL(this);
         }
 
+        void CQRobotTDSMeterSensor::set_pin(GPIOPin *pin)
+        {
+            ESP_LOGCONFIG(TAG, "CQRobot TDS Meter Sensor: set_custom_pin");
+            this->pin_ = pin;
+        }
+
     } // namespace cqrobot_tds_meter_sensor
 } // namespace esphome

@@ -16,8 +16,7 @@ namespace esphome
          */
         unsigned long timeout = 0;
 
-        float temperature = 25;
-        int adcRange = 4096;
+        float temperature = 23;
         float tdsValue = 0;
 
         void CQRobotTDSMeterSensor::setup()

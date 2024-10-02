@@ -36,12 +36,11 @@ float CQRobotTDS::update() //read and calculate
 			this->analogBufferTemp[copyIndex] = this->analogBuffer[copyIndex];
 		averageVoltage = getMedianNum(analogBufferTemp, CQROBOT_SCOUNT) * this->aref / this->adcRange; // read the analog value more stable by the median filtering algorithm, and convert to voltage value
 		float compensationCoefficient = 1.0 + 0.02 * (this->temperature - 25.0); //temperature compensation formula: fFinalResult(25^C) = fFinalResult(current)/(1.0+0.02*(fTP-25.0));
-		float compensationVolatge = averageVoltage / compensationCoefficient; //temperature compensation
-		tdsValue = (133.42 * compensationVolatge * compensationVolatge * compensationVolatge - 255.86 * compensationVolatge * compensationVolatge + 857.39 * compensationVolatge) * 0.5; //convert voltage value to tds value
+		float compensationVoltage = averageVoltage / compensationCoefficient; //temperature compensation
+		tdsValue = (133.42 * compensationVoltage * compensationVoltage * compensationVoltage - 255.86 * compensationVoltage * compensationVoltage + 857.39 * compensationVoltage) * 0.5; //convert voltage value to tds value
 	}
 	return tdsValue;
 }
-
 
 void CQRobotTDS::setTemperature(float temp)  //set the temperature and execute temperature compensation
 {
@@ -52,7 +51,6 @@ void CQRobotTDS::setAdcRange(float range)  //1024 for 10bit ADC;4096 for 12bit A
 {
 	this->adcRange = range;
 }
-
 
 float CQRobotTDS::getTdsValue()
 {

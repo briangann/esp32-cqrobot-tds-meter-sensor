@@ -1,5 +1,6 @@
 #ifndef CQROBOT_H
 #define CQROBOT_H
+#include "CQRobotTDS.h"
 
 #include "Arduino.h"
 #define CQROBOT_SCOUNT  30
@@ -22,7 +23,7 @@ private:
 	float aref;  // default 5.0V on Arduino UNO
 	float adcRange;
 	float temperature;
- 
+
 	float tdsValue;
 	int analogBuffer[CQROBOT_SCOUNT];    // store the analog value in the array, read from ADC
 	int analogBufferTemp[CQROBOT_SCOUNT];

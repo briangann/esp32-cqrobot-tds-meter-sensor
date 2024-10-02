@@ -1,6 +1,5 @@
 #include "esphome/core/log.h"
 #include "cqrobot_tds_meter_sensor.h"
-#include "CQRobotTDS.h"
 
 namespace esphome
 {
@@ -15,9 +14,6 @@ namespace esphome
          * A6	GPIO 34
          * A7	GPIO 35
          */
-        float analogReferenceVoltage = 3.3;
-        //CQRobotTDS tds(36, analogReferenceVoltage); // A0 = 36
-        CQRobotTDS tds(A0); // A0 = 36
         unsigned long timeout = 0;
 
         float temperature = 25;
@@ -26,33 +22,33 @@ namespace esphome
 
         void CQRobotTDSMeterSensor::setup()
         {
-            //tds = CQRobotTDS(36, analogReferenceVoltage); // A0 = 36
-
             ESP_LOGCONFIG(TAG, "Setting up CQRobot TDS Meter Sensor '%s'...", this->get_name().c_str());
             Serial.begin(115200); // Initialize serial port (just writing log info to it)
-            // figure out how to get the pin from config
-            //LOG_PIN("  Pin: ", this->pin_);
-            //this->pin_->setup();
-            //tds.setMyPin(this->pin_);
-            //ESP_LOGCONFIG(TAG, "PIN '%d'", this->pin_);
-            ESP_LOGCONFIG(TAG, "ADC RANGE '%d'", adcRange);
-            ESP_LOGCONFIG(TAG, "Analog Reference Voltage '%g'", analogReferenceVoltage);
-            tds.setAdcRange(adcRange); // 1024 = 10 bit, 4096 = 12 bit
-            //tds.setMyPin(1);
+            ESP_LOGCONFIG(TAG, "PIN '%d'", this->pin_->get_pin());
+            ESP_LOGCONFIG(TAG, "ADC RANGE '%d'", this->adc_range_);
+            ESP_LOGCONFIG(TAG, "Analog Reference Voltage '%g'", this->analog_reference_voltage_);
+            this->tds_ = new CQRobotTDS(this->pin_->get_pin(), this->analog_reference_voltage_);
+            this->tds_->setAdcRange(this->adc_range_); // 1024 = 10 bit, 4096 = 12 bit
         }
 
         void CQRobotTDSMeterSensor::update()
         {
-            tdsValue = tds.getTdsValue();
-            ESP_LOGI(TAG, "UPDATE: %g ppm ", tdsValue); // display value,
-            this->publish_state(tdsValue);
+            float checkTDSValue = this->tds_->getTdsValue();
+            if (checkTDSValue >= 0.0) {
+                tdsValue = checkTDSValue;
+                ESP_LOGI(TAG, "UPDATE: %g ppm ", tdsValue);
+                this->publish_state(tdsValue);
+            } else
+            {
+                ESP_LOGI(TAG, "UPDATE: (skipped) ");
+            }
         }
 
         void CQRobotTDSMeterSensor::loop()
         {
             if (!this->update_)
                 return;
-            tdsValue = tds.update(temperature);
+            tdsValue = this->tds_->update(temperature);
 
             if (timeout < millis())
             {
@@ -70,10 +66,20 @@ namespace esphome
             LOG_UPDATE_INTERVAL(this);
         }
 
-        void CQRobotTDSMeterSensor::set_pin(GPIOPin *pin)
+        void CQRobotTDSMeterSensor::set_pin(InternalGPIOPin *pin)
         {
-            ESP_LOGCONFIG(TAG, "CQRobot TDS Meter Sensor: set_custom_pin");
+            ESP_LOGCONFIG(TAG, "CQRobot TDS Meter Sensor: set_pin");
             this->pin_ = pin;
+        }
+        void CQRobotTDSMeterSensor::set_adc_range(int range)
+        {
+            ESP_LOGCONFIG(TAG, "CQRobot TDS Meter Sensor: set_adc_range");
+            this->adc_range_ = range;
+        }
+        void CQRobotTDSMeterSensor::set_analog_reference_voltage(float voltage)
+        {
+            ESP_LOGCONFIG(TAG, "CQRobot TDS Meter Sensor: set_analog_reference_voltage");
+            this->analog_reference_voltage_ = voltage;
         }
 
     } // namespace cqrobot_tds_meter_sensor

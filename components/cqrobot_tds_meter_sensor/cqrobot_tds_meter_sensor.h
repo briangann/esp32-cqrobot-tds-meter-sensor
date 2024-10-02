@@ -1,4 +1,3 @@
-#pragma once
 #include "CQRobotTDS.h"
 
 #include "esphome/core/component.h"
@@ -16,8 +15,9 @@ namespace esphome
     public:
       void set_tds_sensor(sensor::Sensor *value) { tds_sensor_ = value; }
       void set_temperature_sensor(sensor::Sensor *value) { internal_temperature_ = value; }
-      //void set_my_pin(GPIOPin *pin) { pin_ = pin; }
-      void set_pin(GPIOPin *pin);
+      void set_pin(InternalGPIOPin *pin);
+      void set_adc_range(int range);
+      void set_analog_reference_voltage(float voltage);
       void setup() override;
       void update() override;
       void loop() override;
@@ -25,9 +25,13 @@ namespace esphome
 
     protected:
       bool update_{true};
-      GPIOPin *pin_{nullptr};
+      InternalGPIOPin *pin_{nullptr};
+      int adc_range_{1024};
+      float analog_reference_voltage_{5.0};
       sensor::Sensor *tds_sensor_{nullptr};
       sensor::Sensor *internal_temperature_{nullptr};
+      CQRobotTDS *tds_{nullptr};
+
     };
   } // namespace cqrobot_tds_meter_sensor
 } // namespace esphome

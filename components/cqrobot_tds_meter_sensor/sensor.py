@@ -8,6 +8,8 @@ from esphome.const import ICON_WATER, UNIT_PARTS_PER_MILLION, STATE_CLASS_MEASUR
 from esphome.cpp_helpers import gpio_pin_expression
 
 DEPENDENCIES = ["uart"]
+CONF_ADC_RANGE = "adc_range"
+CONF_ANALOG_REFERENCE_VOLTAGE = "analog_reference_voltage"
 
 cqrobot_tds_meter_sensor_ns = cg.esphome_ns.namespace("cqrobot_tds_meter_sensor")
 CQRobotTDSMeterSensor = cqrobot_tds_meter_sensor_ns.class_(
@@ -25,6 +27,8 @@ CONFIG_SCHEMA = (
     .extend(
         {
             cv.Required(CONF_PIN): pins.gpio_input_pin_schema,
+            cv.Optional(CONF_ADC_RANGE, default="1024"): cv.int_,
+            cv.Optional(CONF_ANALOG_REFERENCE_VOLTAGE, default="5.0"): cv.float_,
         }
     )
     .extend(cv.polling_component_schema("5s"))
@@ -39,3 +43,5 @@ async def to_code(config):
     await uart.register_uart_device(var, config)
     pin = await gpio_pin_expression(config[CONF_PIN])
     cg.add(var.set_pin(pin))
+    cg.add(var.set_adc_range(config[CONF_ADC_RANGE]))
+    cg.add(var.set_analog_reference_voltage(config[CONF_ANALOG_REFERENCE_VOLTAGE]))

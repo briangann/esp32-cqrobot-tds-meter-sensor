@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:HOME}/venv/lib/python3.12/site-packages/esphome/components/sensor",
+                "${env:HOME}/venv/lib/python3.12/site-packages/**",
+                "${env:HOME}/.platformio/packages/framework-arduinoespressif32/**",
+                "${env:HOME}/esp/esp-idf/components/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64"
+        }
+    ],
+    "version": 4
+}

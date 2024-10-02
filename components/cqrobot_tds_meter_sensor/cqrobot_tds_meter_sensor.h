@@ -4,13 +4,11 @@
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/core/hal.h"
 
-#include "esphome/components/uart/uart.h"
-
 namespace esphome
 {
   namespace cqrobot_tds_meter_sensor
   {
-    class CQRobotTDSMeterSensor : public sensor::Sensor, public PollingComponent, public uart::UARTDevice
+    class CQRobotTDSMeterSensor : public sensor::Sensor, public PollingComponent
     {
     public:
       void set_tds_sensor(sensor::Sensor *value) { tds_sensor_ = value; }

@@ -55,3 +55,29 @@ sensor:
     vendor: CQRobot
     model: CQRSENTDS01M
 ```
+
+## Sample Output
+
+```LOG
+[19:48:45][C][gpio.one_wire:020]: GPIO 1-wire bus:
+[19:48:45][C][gpio.one_wire:021]:   Pin: GPIO19
+[19:48:45][C][gpio.one_wire:080]:   Found devices:
+[19:48:45][C][gpio.one_wire:082]:     0x723c56f6493d0528 (DS18B20)
+[19:48:45][C][cqrobot_tds_meter.sensor:067]: CQRobot-CQRSENTDS01M TDS Meter
+[19:48:45][C][cqrobot_tds_meter.sensor:068]:  'CQRobot TDS Meter'
+[19:48:45][C][cqrobot_tds_meter.sensor:068]:   Device Class: 'volatile_organic_compounds_parts'
+[19:48:45][C][cqrobot_tds_meter.sensor:068]:   State Class: 'measurement'
+[19:48:45][C][cqrobot_tds_meter.sensor:068]:   Unit of Measurement: 'ppm'
+[19:48:45][C][cqrobot_tds_meter.sensor:068]:   Accuracy Decimals: 0
+[19:48:45][C][cqrobot_tds_meter.sensor:068]:   Icon: 'hass:water-opacity'
+[19:48:45][C][cqrobot_tds_meter.sensor:069]:   Update Interval: 15.0s
+[19:48:45][C][dallas.temp.sensor:029]: Dallas Temperature Sensor:
+[19:48:45][C][dallas.temp.sensor:034]:   Address: 0x723c56f6493d0528 (DS18B20)
+[19:48:45][C][dallas.temp.sensor:035]:   Resolution: 12 bits
+[19:48:45][C][dallas.temp.sensor:036]:   Update Interval: 60.0s
+...
+[19:48:57][I][cqrobot_tds_meter.sensor:041]: UPDATE: CQRobot-CQRSENTDS01M TDS Meter -> 150 ppm (149.697 raw value) (using 23.6875 Celsius)
+[19:48:57][D][sensor:094]: 'CQRobot TDS Meter': Sending state 150.00000 ppm with 0 decimals of accuracy
+[19:49:12][I][cqrobot_tds_meter.sensor:041]: UPDATE: CQRobot-CQRSENTDS01M TDS Meter -> 150 ppm (149.697 raw value) (using 23.6875 Celsius)
+[19:49:12][D][sensor:094]: 'CQRobot TDS Meter': Sending state 150.00000 ppm with 0 decimals of accuracy
+```

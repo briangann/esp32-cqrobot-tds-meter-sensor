@@ -58,7 +58,7 @@ sensor:
 
 ## Sample Output
 
-```LOG
+```SHELL
 [19:48:45][C][gpio.one_wire:020]: GPIO 1-wire bus:
 [19:48:45][C][gpio.one_wire:021]:   Pin: GPIO19
 [19:48:45][C][gpio.one_wire:080]:   Found devices:

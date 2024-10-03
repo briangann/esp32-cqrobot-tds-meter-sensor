@@ -16,7 +16,6 @@ namespace esphome
          */
         unsigned long timeout = 0;
 
-        float temperature = 23;
         float tdsValue = 0;
 
         void CQRobotTDSMeterSensor::setup()
@@ -35,8 +34,9 @@ namespace esphome
             float checkTDSValue = this->tds_->getTdsValue();
             if (checkTDSValue >= 0.0) {
                 tdsValue = checkTDSValue;
-                ESP_LOGI(TAG, "UPDATE: %g ppm ", tdsValue);
-                this->publish_state(tdsValue);
+                int roundedValue = (int)round(tdsValue);
+                ESP_LOGI(TAG, "UPDATE: %d ppm (%g raw value) (using %g Celsius)", roundedValue, tdsValue, this->internal_temperature_);
+                this->publish_state(roundedValue);
             } else
             {
                 ESP_LOGI(TAG, "UPDATE: (skipped) ");
@@ -47,7 +47,7 @@ namespace esphome
         {
             if (!this->update_)
                 return;
-            tdsValue = this->tds_->update(temperature);
+            tdsValue = this->tds_->update(this->internal_temperature_);
 
             if (timeout < millis())
             {
@@ -63,6 +63,12 @@ namespace esphome
             ESP_LOGCONFIG(TAG, "CQRobot TDS Meter Sensor");
             LOG_SENSOR("", "", this);
             LOG_UPDATE_INTERVAL(this);
+        }
+
+        void CQRobotTDSMeterSensor::set_temperature(float val)
+        {
+            ESP_LOGI(TAG, "CQRobot TDS Meter Sensor: received temperature update %g", val);
+            this->internal_temperature_ = val;
         }
 
         void CQRobotTDSMeterSensor::set_pin(InternalGPIOPin *pin)

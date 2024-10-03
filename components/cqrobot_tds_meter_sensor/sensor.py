@@ -4,8 +4,15 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
 from esphome.components import sensor
-from esphome.const import ICON_WATER, UNIT_PARTS_PER_MILLION, STATE_CLASS_MEASUREMENT, CONF_PIN
+from esphome.const import (
+    UNIT_PARTS_PER_MILLION,
+    STATE_CLASS_MEASUREMENT,
+    CONF_PIN,
+    DEVICE_CLASS_VOLATILE_ORGANIC_COMPOUNDS_PARTS,
+)
 from esphome.cpp_helpers import gpio_pin_expression
+
+#DEPENDENCIES = ['dallas_temp']
 
 CONF_ADC_RANGE = "adc_range"
 CONF_ANALOG_REFERENCE_VOLTAGE = "analog_reference_voltage"
@@ -18,10 +25,11 @@ CQRobotTDSMeterSensor = cqrobot_tds_meter_sensor_ns.class_(
 CONFIG_SCHEMA = (
     sensor.sensor_schema(
         CQRobotTDSMeterSensor,
-        state_class=STATE_CLASS_MEASUREMENT,
         unit_of_measurement=UNIT_PARTS_PER_MILLION,
-        icon=ICON_WATER,
-        accuracy_decimals=1,
+        icon="hass:water-opacity",
+        accuracy_decimals=0,
+        device_class=DEVICE_CLASS_VOLATILE_ORGANIC_COMPOUNDS_PARTS,
+        state_class=STATE_CLASS_MEASUREMENT,
     )
     .extend(
         {

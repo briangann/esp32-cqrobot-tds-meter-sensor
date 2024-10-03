@@ -12,7 +12,7 @@ namespace esphome
     {
     public:
       void set_tds_sensor(sensor::Sensor *value) { tds_sensor_ = value; }
-      void set_temperature_sensor(sensor::Sensor *value) { internal_temperature_ = value; }
+      void set_temperature(float val);
       void set_pin(InternalGPIOPin *pin);
       void set_adc_range(int range);
       void set_analog_reference_voltage(float voltage);
@@ -27,7 +27,7 @@ namespace esphome
       int adc_range_{1024};
       float analog_reference_voltage_{5.0};
       sensor::Sensor *tds_sensor_{nullptr};
-      sensor::Sensor *internal_temperature_{nullptr};
+      float internal_temperature_{25.0};
       CQRobotTDS *tds_{nullptr};
 
     };

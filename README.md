@@ -80,4 +80,8 @@ sensor:
 [19:48:57][D][sensor:094]: 'CQRobot TDS Meter': Sending state 150.00000 ppm with 0 decimals of accuracy
 [19:49:12][I][cqrobot_tds_meter.sensor:041]: UPDATE: CQRobot-CQRSENTDS01M TDS Meter -> 150 ppm (149.697 raw value) (using 23.6875 Celsius)
 [19:49:12][D][sensor:094]: 'CQRobot TDS Meter': Sending state 150.00000 ppm with 0 decimals of accuracy
+[19:49:20][D][dallas.temp.sensor:054]: 'Pond Upper Zone Temperature C': Got Temperature=23.7°C
+[19:49:20][D][sensor:094]: 'Pond Upper Zone Temperature C': Sending state 23.68750 °C with 5 decimals of accuracy
+[19:49:20][I][cqrobot_tds_meter.sensor:085]: CQRobot-CQRSENTDS01M TDS Meter: received temperature update 23.6875
+[19:49:27][I][cqrobot_tds_meter.sensor:041]: UPDATE: CQRobot-CQRSENTDS01M TDS Meter -> 150 ppm (149.895 raw value) (using 23.6875 Celsius)
 ```

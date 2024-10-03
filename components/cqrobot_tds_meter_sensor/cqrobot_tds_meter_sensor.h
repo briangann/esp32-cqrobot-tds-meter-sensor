@@ -16,6 +16,8 @@ namespace esphome
       void set_pin(InternalGPIOPin *pin);
       void set_adc_range(int range);
       void set_analog_reference_voltage(float voltage);
+      void set_vendor(const std::string &value);
+      void set_model(const std::string &value);
       void setup() override;
       void update() override;
       void loop() override;
@@ -29,7 +31,8 @@ namespace esphome
       sensor::Sensor *tds_sensor_{nullptr};
       float internal_temperature_{25.0};
       CQRobotTDS *tds_{nullptr};
-
+      std::string vendor_{"Vendor-Unknown"};
+      std::string model_{"Model-Unknown"};
     };
   } // namespace cqrobot_tds_meter_sensor
 } // namespace esphome

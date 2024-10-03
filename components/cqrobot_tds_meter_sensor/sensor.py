@@ -16,6 +16,8 @@ from esphome.cpp_helpers import gpio_pin_expression
 
 CONF_ADC_RANGE = "adc_range"
 CONF_ANALOG_REFERENCE_VOLTAGE = "analog_reference_voltage"
+CONF_VENDOR = "vendor"
+CONF_MODEL = "model"
 
 cqrobot_tds_meter_sensor_ns = cg.esphome_ns.namespace("cqrobot_tds_meter_sensor")
 CQRobotTDSMeterSensor = cqrobot_tds_meter_sensor_ns.class_(
@@ -36,6 +38,8 @@ CONFIG_SCHEMA = (
             cv.Required(CONF_PIN): pins.gpio_input_pin_schema,
             cv.Optional(CONF_ADC_RANGE, default="1024"): cv.int_,
             cv.Optional(CONF_ANALOG_REFERENCE_VOLTAGE, default="5.0"): cv.float_,
+            cv.Optional(CONF_VENDOR, default="CQRobot"): cv.string,
+            cv.Optional(CONF_MODEL, default="CQRSENTDS01M"): cv.string,
         }
     )
     .extend(cv.polling_component_schema("5s"))
@@ -50,3 +54,5 @@ async def to_code(config):
     cg.add(var.set_pin(pin))
     cg.add(var.set_adc_range(config[CONF_ADC_RANGE]))
     cg.add(var.set_analog_reference_voltage(config[CONF_ANALOG_REFERENCE_VOLTAGE]))
+    cg.add(var.set_vendor(config[CONF_VENDOR]))
+    cg.add(var.set_model(config[CONF_MODEL]))

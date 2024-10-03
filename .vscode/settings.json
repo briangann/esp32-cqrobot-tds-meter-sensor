@@ -3,6 +3,7 @@
     "aref",
     "codegen",
     "CQROBOT",
+    "CQRSENTDS",
     "esphome",
     "GPIO",
     "LOGCONFIG",
